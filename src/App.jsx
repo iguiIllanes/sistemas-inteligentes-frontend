@@ -20,9 +20,11 @@ function App() {
 
   const handleCheckboxChange = () => {
     if (isClassifier) {
+      setServerResponse("");
       setOptionSelected("Clasificador con Segmentacion");
       setIsClassifier(false);
     } else {
+      setServerResponse("");
       setOptionSelected("Clasificador Simple");
       setIsClassifier(true);
     }
@@ -53,6 +55,17 @@ function App() {
           console.log(err);
         });
     }
+  };
+
+  const openImageInNewTab = (imageUrl) => {
+    const link = document.createElement("a");
+    link.href = imageUrl;
+    link.target = "_blank";
+    link.click();
+  };
+  const handlePlotView = async () => {
+    const imageUrl = `http://localhost:8000/plot`;
+    openImageInNewTab(imageUrl);
   };
 
   return (
@@ -86,6 +99,10 @@ function App() {
           <p>{serverResponse}</p>
         </div>
         <button type="submit">Enviar</button>
+
+        {!isClassifier ? (
+          <button onClick={handlePlotView}>Ver Gráfica</button>
+        ) : null}
       </form>
     </div>
   );
